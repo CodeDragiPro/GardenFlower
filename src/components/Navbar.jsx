@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import logo from "../assets/logoGardenFlower.png";
 import { FaTimes, FaBars, FaShoppingCart } from "react-icons/fa";
+import { auth } from '../../firebaseConfig';
+
 
 const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
 
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+    });
+  
+    return unsubscribe;
+  }, []);
+  
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
@@ -14,6 +25,16 @@ const Navbar = () => {
     setIsMobileMenuOpen(false);
   };
 
+  const handleLogout = () => {
+    auth.signOut()
+      .then(() => {
+        console.log('Déconnexion réussie');
+      })
+      .catch((error) => {
+        console.error('Une erreur s\'est produite lors de la déconnexion :', error);
+      });
+  };
+  
   return (
     <div>
       <Link
@@ -47,9 +68,16 @@ const Navbar = () => {
           <Link to="/contact" onClick={closeMobileMenu}>
             Contact
           </Link>
-          <Link to="/login" onClick={closeMobileMenu}>
-            S'identifier
-          </Link>
+          {user ? (
+            <>
+              <span>{user.email}</span>
+              <button onClick={handleLogout}>Déconnexion</button>
+            </>
+          ) : (
+            <Link to="/login" onClick={closeMobileMenu}>
+              S'identifier
+            </Link>
+          )}
           <Link to="/contact" onClick={closeMobileMenu}>
             <FaShoppingCart className="m-1" size={20} />
           </Link>
@@ -85,9 +113,16 @@ const Navbar = () => {
               <Link to="#" onClick={closeMobileMenu}>
                 Contact
               </Link>
-              <Link to="/contact" onClick={closeMobileMenu}>
-            S'identifier
-          </Link>
+              {user ? (
+                <>
+                  <span>{user.email}</span>
+                  <button onClick={handleLogout}>Déconnexion</button>
+                </>
+              ) : (
+                <Link to="/login" onClick={closeMobileMenu}>
+                  S'identifier
+                </Link>
+              )}
             </div>
           </div>
         )}
