@@ -76,7 +76,7 @@ const Login = () => {
           <div className="my-2">
             <p>
               Vous n'avez pas encore de compte ?{" "}
-              <Link to="/signin" className="font-bold text-flowerpink">
+              <Link to="/signup" className="font-bold text-flowerpink">
                 S'enregistrer
               </Link>
             </p>

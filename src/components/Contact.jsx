@@ -13,10 +13,8 @@ const Contact = () => {
       <div>
         <div className="flex flex-col md:flex-row py-2 ">
 
-          <div className=" w-30 md:w-2/3 h-auto mx-2 md:my-0 my-2 p-4">
-            {/* Contenu du premier bloc (Formulaire) */}
+          <div className=" w-30 md:w-2/3 h-auto mx-2 md:my-0 my-2 p-4 border-2 border-flowerpink rounded-lg">
             <form id="form-input">
-              {/* Nom et prénom */}
               <div className="flex flex-wrap">
                 <div className="w-full md:w-1/2 md:pr-2 py-2">
                   <input
@@ -33,7 +31,6 @@ const Contact = () => {
                   />
                 </div>
               </div>
-              {/* Email et téléphone */}
               <div className="flex flex-wrap mb-2">
                 <div className="w-full md:w-1/2 md:pr-2 py-2">
                   <input
@@ -50,7 +47,6 @@ const Contact = () => {
                   />
                 </div>
               </div>
-              {/* Sujet du message (sélection) */}
               <div className="mb-4">
                 <select className="w-full bg-flowerpink rounded-xl px-4 py-2 focus:outline-none">
                   <option value="">Choisir un sujet</option>
@@ -59,7 +55,6 @@ const Contact = () => {
                   <option value="Autre">Autre</option>
                 </select>
               </div>
-              {/* Message */}
               <div className="mb-2">
                 <textarea
                   className="w-full bg-flowerpink rounded-xl px-4 py-2 focus:outline-none"
@@ -67,20 +62,17 @@ const Contact = () => {
                   placeholder="Votre message"
                 ></textarea>
               </div>
-              {/* Bouton Envoyer */}
               <Button text="ENVOYER" className="rounded-xl" />
             </form>
           </div>
 
-          <div className="bg-flowergreen w-30 md:w-1/3 h-auto mx-4 m-6 relative rounded-xl">
-            {/* Image obscurcie */}
+          <div className="bg-flowergreen w-30 md:w-1/3 h-auto md:my-0 my-2 mx-2 relative rounded-xl">
             <div className="absolute inset-0 bg-flowergreen opacity-60 rounded-xl"></div>
             <img
               src={flowerImage}
               alt="Flower"
               className="w-full h-full object-cover rounded-xl"
             />
-            {/* Textes et formulaire */}
             <div className="absolute inset-0 flex flex-col justify-center items-center text-white px-4">
               <h2 className="text-xl font-bold mb-4">NOTRE NEWSLETTER</h2>
               <p className="text-base mb-4">Abonnez-vous à notre Newsletter</p>
@@ -96,7 +88,6 @@ const Contact = () => {
 
         <div className="flex flex-col md:flex-row md:py-2 py-0 text-center">
           <div className="bg-[#FFF5F2] w-30 md:w-1/3 h-64 mx-2 md:my-0 my-2 flex justify-center items-center">
-            {/* Contenu du premier petit bloc */}
             <div className="flex flex-col items-center mx-4">
               <FaEnvelope size={24} className="text-flowergreen" />
               <p className="font-bold mt-2">Email</p>
@@ -104,7 +95,6 @@ const Contact = () => {
             </div>
           </div>
           <div className="bg-[#FCE6E1] w-30 md:w-1/3 h-64 mx-2 md:my-0 my-2 flex justify-center items-center">
-            {/* Contenu du deuxième petit bloc */}
             <div className="flex flex-col items-center mx-4">
               <FaPhone size={24} className="text-flowergreen" />
               <p className="font-bold mt-2">Téléphone</p>
@@ -112,7 +102,6 @@ const Contact = () => {
             </div>
           </div>
           <div className="bg-flowerpink w-30 md:w-1/3 h-64 mx-2 md:my-0 my-2 flex justify-center items-center">
-            {/* Contenu du troisième petit bloc */}
             <div className="flex flex-col items-center mx-4">
               <FaMapMarkerAlt size={24}  className="text-flowergreen" />
               <p className="font-bold mt-2">Localisation</p>

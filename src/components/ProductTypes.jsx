@@ -11,7 +11,7 @@ const ProductTypes = () => {
       <ProductTypesDisplay/>
       <div className="my-4">
         {/* Utiliser Link pour rediriger vers ProductList au clic sur le bouton */}
-        <Link to="/productpage">
+        <Link to="/product">
           <Button text="VOIR NOS PRODUITS" className="" />
         </Link>
       </div>
