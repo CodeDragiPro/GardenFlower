@@ -4,8 +4,7 @@ import logo from "../assets/logoGardenFlower.png";
 import { FaTimes, FaBars, FaShoppingCart } from "react-icons/fa";
 import { auth } from '../../firebaseConfig';
 
-
-const Navbar = () => {
+const Navbar = ({ openCart }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [user, setUser] = useState(null);
 
@@ -34,7 +33,7 @@ const Navbar = () => {
         console.error('Une erreur s\'est produite lors de la déconnexion :', error);
       });
   };
-  
+
   return (
     <div>
       <Link
@@ -78,18 +77,18 @@ const Navbar = () => {
               S'identifier
             </Link>
           )}
-          <Link to="/contact" onClick={closeMobileMenu}>
+          <button onClick={openCart} className="text-flowergreen focus:outline-none">
             <FaShoppingCart className="m-1" size={20} />
-          </Link>
+          </button>
         </div>
 
         <div
           className="flex md:hidden text-flowergreen space-x-2"
           onClick={toggleMobileMenu}
         >
-          <Link to="/contact" onClick={closeMobileMenu}>
+          <button onClick={openCart} className="text-flowergreen focus:outline-none">
             <FaShoppingCart size={20} />
-          </Link>
+          </button>
           <FaBars size={20} />
         </div>
 

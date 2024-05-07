@@ -1,4 +1,6 @@
-import React from "react";
+// App.jsx
+
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
@@ -10,20 +12,30 @@ import ProductDetails from "./pages/ProductDetails";
 import FloatCart from "./components/FloatCart";
 
 function App() {
+  const [isCartOpen, setIsCartOpen] = useState(false);
+
+  const openCart = () => {
+    setIsCartOpen(true);
+  };
+
+  const closeCart = () => {
+    setIsCartOpen(false);
+  };
+
   return (
     <BrowserRouter>
       <div className="md:mx-12 mx-6 mt-6">
-        <Navbar />
+      <Navbar openCart={openCart}  setIsCartOpen={setIsCartOpen}/>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/product" element={<ProductPage/>}/>
-          <Route path="/product/:id" element={<ProductDetails/>}/>
-          <Route path="/login" element={<Login/>}/>
-          <Route path="/signup" element={<SignUp/>}/>
+          <Route path="/product" element={<ProductPage />} />
+          <Route path="/product/:id" element={<ProductDetails openCart={openCart} />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
-      <FloatCart/>
-      <Footer/>
+      {isCartOpen && <FloatCart closeCart={closeCart} setIsCartOpen={setIsCartOpen} />}
+      <Footer />
     </BrowserRouter>
   );
 }

@@ -4,15 +4,17 @@ import { fetchProducts } from "../utils/productservice";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Hero from "../components/Hero";
-import Section from "../components/Section";
 import ProductGallery from "../components/ProductGallery";
 import Divider from "../components/Divider";
+import FloatCart from "../components/FloatCart"; 
 
-const ProductDetails = () => {
+const ProductDetails = ({ openCart }) => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [price, setPrice] = useState(null);
+  const [isCartOpen, setIsCartOpen] = useState(false); 
 
   useEffect(() => {
     const getProductDetails = async () => {
@@ -37,7 +39,10 @@ const ProductDetails = () => {
         className={`block px-2 py-2 mt-2 rounded w-full ${
           selectedSize === size ? "border-2 border-flowerpink" : ""
         }`}
-        onClick={() => setSelectedSize(size)}
+        onClick={() => {
+          setSelectedSize(size);
+          setPrice(product.price[index]);
+        }}
       >
         <div className="text-2xl uppercase">{formatSize(size)}</div>
         <div className="text-lg">{`${product.price[index]} €`}</div>
@@ -71,31 +76,41 @@ const ProductDetails = () => {
   };
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
+    if (!selectedSize || !price) {
       toast.error("Veuillez sélectionner une taille");
       return;
     }
-
+  
     const deliveryCost = product.deliveryCost;
-
+  
     const item = {
       id: product.id,
       title: product.title,
       image: product.images[0],
       size: selectedSize,
       quantity: quantity,
+      price: price,
       deliveryCost: deliveryCost,
     };
-
-    localStorage.setItem("cartItem", JSON.stringify(item));
-
-    toast.success("Article ajouté au panier !");
+  
+    const cartData = localStorage.getItem("cartItems");
+    let updatedCartItems = [];
+  
+    if (cartData) {
+      updatedCartItems = JSON.parse(cartData);
+    }
+  
+    updatedCartItems.push(item);
+  
+    localStorage.setItem("cartItems", JSON.stringify(updatedCartItems));
+    openCart();
   };
+  
 
   return (
     <div className="bg-white">
       <Hero />
-      <div className="mx-auto justify-center max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 px-4  sm:px-6  lg:max-w-7xl lg:grid-cols-2 lg:px-8 my-4">
+      <div className="mx-auto justify-center max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 px-4 sm:px-6 lg:max-w-7xl lg:grid-cols-2 lg:px-8 my-4">
         <ProductGallery photos={product && product.images} />
         <div className="space-y-2">
           {product && (
@@ -103,7 +118,6 @@ const ProductDetails = () => {
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.title}
               </h2>
-              <p className="mt-4 text-gray-500">{product.description}</p>
               <Divider />
               <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
                 Choisir une taille
@@ -146,22 +160,21 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div className="mx-auto justify-center max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 px-4  sm:px-6  lg:max-w-7xl lg:grid-cols-2 lg:px-8 my-8">
+      <div className="mx-auto justify-center max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 px-4 sm:px-6 lg:max-w-7xl lg:grid-cols-2 lg:px-8 my-8">
         <div className="space-y-2">
           {product && (
             <>
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.subtitle}
               </h2>
-              <p className="mt-4 text-gray-500">{product.stories[0]}</p>
-              <Divider/>
+              <Divider />
               <h2 className="text-sm font-bold tracking-tight text-flowergreen sm:text-lg">
                 Composition
               </h2>
               <p className="mt-4 text-gray-500">{product.stories[1]}</p>
-              <Divider/>
+              <Divider />
               <h2 className="text-sm font-bold tracking-tight text-flowergreen sm:text-lg">
-                Entretient
+                Entretien
               </h2>
               <p className="mt-4 text-gray-500">{product.stories[2]}</p>
             </>
@@ -175,6 +188,9 @@ const ProductDetails = () => {
           />
         </div>
       </div>
+
+      {/* Afficher le FloatCart si isCartOpen est true */}
+      {isCartOpen && <FloatCart />}
     </div>
   );
 };
