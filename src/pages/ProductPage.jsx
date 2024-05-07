@@ -45,7 +45,7 @@ const ProductPage = () => {
   };
 
   return (
-    <div className=' h-full  my-2'>
+    <div className='h-full  my-2'>
       <Hero/>
     <div className="container mx-auto">
       <Section text="NOS PRODUITS" />

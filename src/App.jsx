@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
 import ProductPage from "./pages/ProductPage";
 import ProductDetails from "./pages/ProductDetails";
+import FloatCart from "./components/FloatCart";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/signup" element={<SignUp/>}/>
         </Routes>
       </div>
+      <FloatCart/>
       <Footer/>
     </BrowserRouter>
   );

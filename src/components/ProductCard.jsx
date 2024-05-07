@@ -23,7 +23,7 @@ const ProductCard = ({ product }) => {
             </div>
           </div>
           <div className=" text-lg font-semibold text-flowerpink mt-2">
-            {product.price1}€
+            {product.price[0]} €
             <hr className="border-flowerpink" />
           </div>
         </div>
