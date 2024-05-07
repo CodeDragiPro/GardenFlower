@@ -118,6 +118,7 @@ const ProductDetails = ({ openCart }) => {
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.title}
               </h2>
+              <p className="mt-4 text-gray-500">{product.description}</p>
               <Divider />
               <h2 className="text-xl font-bold tracking-tight text-gray-900 sm:text-2xl">
                 Choisir une taille
@@ -167,6 +168,7 @@ const ProductDetails = ({ openCart }) => {
               <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.subtitle}
               </h2>
+              <p className="mt-4 text-gray-500">{product.stories[0]}</p>
               <Divider />
               <h2 className="text-sm font-bold tracking-tight text-flowergreen sm:text-lg">
                 Composition
@@ -189,7 +191,6 @@ const ProductDetails = ({ openCart }) => {
         </div>
       </div>
 
-      {/* Afficher le FloatCart si isCartOpen est true */}
       {isCartOpen && <FloatCart />}
     </div>
   );
