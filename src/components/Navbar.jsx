@@ -1,28 +1,31 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import logo from "../assets/logoGardenFlower.png";
-import { FaTimes, FaBars, FaShoppingCart } from "react-icons/fa";
-import { auth } from '../../firebaseConfig';
+import React, { useState, useEffect } from 'react';
+import { Disclosure } from '@headlessui/react';
+import { Bars3Icon, ShoppingCartIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { HashLink as Link } from "react-router-hash-link";
+import { auth } from '../../firebaseConfig'; 
+import logo from '../assets/logoGardenFlower.png';
+const navigation = [
+  { name: 'Acceuil', to: '/', current: true },
+  { name: 'Nos Engagements', to: '#commitments', current: false },
+  { name: 'Nos Produits', to: '#products', current: false },
+  { name: 'Notre Equipe', to: '/#team', current: false },
+  { name: 'Contact', to: '/#contact', current: false },
+];
 
-const Navbar = ({ openCart }) => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
+
+export default function Navbar({ openCart }) {
+  const [user, setUser] = useState(null); 
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
     });
-  
+
     return unsubscribe;
   }, []);
-  
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
 
   const handleLogout = () => {
     auth.signOut()
@@ -35,99 +38,143 @@ const Navbar = ({ openCart }) => {
   };
 
   return (
-    <div>
-      <Link
-        to="/"
-        className="items-center hidden md:block"
-        onClick={closeMobileMenu}
-      >
-        <img src={logo} className="w-[10vh] items-end justify-end" alt="Logo" />
-      </Link>
-      <nav className="flex justify-between items-center w-full text-flowergreen font-medium text-lg top-0 font-josefin">
-        <Link
-          to="/"
-          className="flex items-center md:hidden"
-          onClick={closeMobileMenu}
-        >
-          <img src={logo} className="w-[10vh]" alt="Logo" />
-        </Link>
-        <div className="hidden md:flex space-x-4 ml-auto">
-          <Link to="/" onClick={closeMobileMenu}>
-            Accueil
-          </Link>
-          <Link to="/products" onClick={closeMobileMenu}>
-            Notre Engagement
-          </Link>
-          <Link to="/about" onClick={closeMobileMenu}>
-            Nos Produits
-          </Link>
-          <Link to="/contact" onClick={closeMobileMenu}>
-            Notre Histoire
-          </Link>
-          <Link to="/contact" onClick={closeMobileMenu}>
-            Contact
-          </Link>
-          {user ? (
-            <>
-              <span>{user.email}</span>
-              <button onClick={handleLogout}>Déconnexion</button>
-            </>
-          ) : (
-            <Link to="/login" onClick={closeMobileMenu}>
-              S'identifier
-            </Link>
-          )}
-          <button onClick={openCart} className="text-flowergreen focus:outline-none">
-            <FaShoppingCart className="m-1" size={20} />
-          </button>
-        </div>
-
-        <div
-          className="flex md:hidden text-flowergreen space-x-2"
-          onClick={toggleMobileMenu}
-        >
-          <button onClick={openCart} className="text-flowergreen focus:outline-none">
-            <FaShoppingCart size={20} />
-          </button>
-          <FaBars size={20} />
-        </div>
-
-        {isMobileMenuOpen && (
-          <div className="md:hidden fixed inset-0 bg-flowerpink flex flex-col items-center justify-center z-50">
-            <div className="absolute top-0 right-0 mt-6 mr-4">
-              <button onClick={toggleMobileMenu} className="focus:outline-none">
-                <FaTimes size={24} />
-              </button>
-            </div>
-            <div className="text-center space-y-4 flex flex-col items-center">
-              <Link to="/" className="block" onClick={closeMobileMenu}>
-                Accueil
-              </Link>
-              <Link to="#" onClick={closeMobileMenu}>
-                Qui sommes nous ?
-              </Link>
-              <Link to="/produits" onClick={closeMobileMenu}>
-                Produits
-              </Link>
-              <Link to="#" onClick={closeMobileMenu}>
-                Contact
-              </Link>
-              {user ? (
-                <>
-                  <span>{user.email}</span>
-                  <button onClick={handleLogout}>Déconnexion</button>
-                </>
-              ) : (
-                <Link to="/login" onClick={closeMobileMenu}>
-                  S'identifier
+    <Disclosure as="nav" className="bg-gray-800">
+      {({ open }) => (
+        <>
+          <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
+            <div className="relative flex h-16 items-center justify-between">
+              <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
+                {/* Mobile menu button*/}
+                <Disclosure.Button className="relative inline-flex items-center justify-center rounded-md p-2 text-flowerpink hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <span className="absolute -inset-0.5" />
+                  <span className="sr-only">Open main menu</span>
+                  {open ? (
+                    <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
+                  ) : (
+                    <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
+                  )}
+                </Disclosure.Button>
+              </div>
+              <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+                <div className="flex flex-shrink-0 items-center">
+                  <Link to="/">
+                 <h1 className='text-flowerpink text-xl uppercase font-black'>Gardenflower</h1>
+                 </Link>
+                </div>
+                <div className="hidden sm:ml-6 sm:block">
+                  <div className="flex space-x-4">
+                    {navigation.map((item) => (
+                      <Link
+                        key={item.name}
+                        to={item.to}
+                        className={classNames(
+                          item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                          'rounded-md px-3 py-2 text-sm font-medium'
+                        )}
+                        aria-current={item.current ? 'page' : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                      
+                    ))}
+                         {!user && (
+                           <Link to="/login">
+                <button
+                  type="button"
+                  className="block w-full py-2 px-4 border border-transparent text-sm font-medium rounded-md text-black hover:text-white bg-flowerpink hover:bg-gray-700"
+                >
+                  Connexion
+                </button>
                 </Link>
               )}
+                  </div>
+                </div>
+                {/* Affichage de l'email de l'utilisateur connecté et du bouton de déconnexion */}
+                {user && (
+                  <div className="hidden sm:block sm:ml-6 md:pt-1.5">
+                    <p className="text-gray-300">{user.email}</p>
+                  </div>
+                )}
+                {user && (
+                  <button
+                    type="button"
+                    className="ml-3 relative rounded-md  p-1 text-black bg-flowerpink hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 sm:ml-6 md:block hidden"
+                    onClick={handleLogout}
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Logout</span>
+                   Deconnexion
+                  </button>
+                )}
+              </div>
+              <div>
+                
+              </div>
+              <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
+                <button
+                  type="button"
+                  className="relative rounded-full bg-gray-800 p-1 text-flowerpink hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                  onClick={openCart}
+                >
+                  <span className="absolute -inset-1.5" />
+                  <span className="sr-only">Open Cart</span>
+                  <ShoppingCartIcon className="h-6 w-6" aria-hidden="true" />
+                </button>
+                {/* Affichage du bouton de déconnexion en version mobile */}
+           
+                
+              </div>
             </div>
           </div>
-        )}
-      </nav>
-    </div>
-  );
-};
 
-export default Navbar;
+          <Disclosure.Panel className="sm:hidden">
+            <div className="space-y-1 px-2 pb-3 pt-2">
+            {navigation.map((item) => (
+  <a
+    key={item.name}
+    href={item.to}  // Utilisez l'attribut href pour définir l'ancre
+    className={classNames(
+      item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+      'block rounded-md px-3 py-2 text-sm font-medium'
+    )}
+    aria-current={item.current ? 'page' : undefined}
+  >
+    {item.name}
+  </a>
+))}
+
+              {/* Affichage de l'email de l'utilisateur connecté en version mobile */}
+              <hr className='pb-2'/>
+              {user && (
+                <p className="text-gray-300 pl-2 pb-2">{user.email}</p>
+              )}
+              {/* Affichage du bouton de connexion en version mobile */}
+             
+              {!user && (
+                <Link to="/login">
+                <button
+                  type="button"
+                  className="block py-2 px-2 border border-transparent  font-medium rounded-md text-black bg-flowerpink hover:bg-gray-700"
+                >
+                  Connexion
+                </button>
+                </Link>
+              )}
+               {user && (
+                  <button
+                    type="button"
+                    className="ml-3 relative rounded-md  p-1 text-black bg-flowerpink hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+                    onClick={handleLogout}
+                  >
+                    <span className="absolute -inset-1.5" />
+                    <span className="sr-only">Logout</span>
+                   Deconnexion
+                  </button>
+                )}
+            </div>
+          </Disclosure.Panel>
+        </>
+      )}
+    </Disclosure>
+  );
+}

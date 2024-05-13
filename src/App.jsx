@@ -1,5 +1,3 @@
-// App.jsx
-
 import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -10,6 +8,7 @@ import SignUp from "./pages/SignUp";
 import ProductPage from "./pages/ProductPage";
 import ProductDetails from "./pages/ProductDetails";
 import FloatCart from "./components/FloatCart";
+import Banner from "./components/Banner";
 
 function App() {
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -34,6 +33,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
         </Routes>
       </div>
+      <Banner/>
       {isCartOpen && <FloatCart closeCart={closeCart} setIsCartOpen={setIsCartOpen} />}
       <Footer />
     </BrowserRouter>

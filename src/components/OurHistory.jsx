@@ -1,36 +1,62 @@
 import React from 'react';
-import Section from './Section';
-import AvatarComponent from './AvatarComponent';
-import avatar1 from '../assets/avatar1.png';
-import avatar2 from'../assets/avatar2.png';
-import avatar3 from '../assets/avatar3.png';
+import Section from '../components/Section';
+
+const people = [
+  {
+    name: 'Sophie Martin',
+    role: 'Fondatrice / Directrice Générale',
+    imageUrl:
+      'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Alexandre Dubois',
+    role: 'Co-Fondateur / Responsable des Ventes',
+    imageUrl:
+      'https://images.unsplash.com/photo-1544723795-3fb6469f5b39?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Emilie Dupont',
+    role: 'Directrice Artistique',
+    imageUrl:
+      'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+  {
+    name: 'Jeanne Durand',
+    role: 'Responsable des Achats',
+    imageUrl:
+      'https://images.unsplash.com/photo-1488426862026-3ee34a7d66df?q=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+  },
+]
 
 const OurHistory = () => {
   return (
-    <div>
-      <Section text="NOTRE HISTOIRE"/>
-      <p className='font-Josefin text-center py-4'>Garden Flower, fondée par Sarah Smith avec le soutien de son frère David et de sa sœur Emily, est une boutique de fleurs engagée dans la création d'arrangements floraux exceptionnels. Située au cœur d'une vallée verdoyante, notre entreprise est dédiée à la passion pour les fleurs et à leur capacité à illuminer les moments de la vie. Nous croyons fermement en la qualité, l'éco-responsabilité et le soutien à la communauté. Grâce à notre engagement envers ces valeurs, nous sommes devenus bien plus qu'une simple boutique de fleurs ; nous sommes devenus un symbole d'espoir, de partage et d'engagement dans notre ville. Sous la direction de Sarah, David et Emily, Garden Flower continue de prospérer en offrant des créations florales uniques et en faisant une différence positive dans notre communauté et notre environnement.</p>
-      <div className='py-2 flex flex-col md:flex-row justify-center items-center'>
-        <AvatarComponent
-          avatarSrc={avatar1}
-          name="Sarah Smith"
-          role="Fondatrice"
-        />
-        <div className="hidden md:block mx-4"></div> {/* Marge horizontale seulement en desktop */}
-        <AvatarComponent
-          avatarSrc={avatar2}
-          name="David Smith"
-          role="Co-Fondateur"
-        />
-        <div className="hidden md:block mx-4"></div> {/* Marge horizontale seulement en desktop */}
-        <AvatarComponent
-          avatarSrc={avatar3}
-          name="Emily Smith"
-          role="Directrice"
-        />
+    <div id="team">
+    <Section text="Notre equipe"/>
+    <div className="bg-gray-200 my-4">
+      <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3 py-4">
+        <div className="max-w-2xl">
+          <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Rencontrez notre équipe</h2>
+          <p className="mt-6 text-lg leading-8 text-gray-600">
+            Notre équipe est composée de professionnels passionnés par les fleurs et dédiés à créer des arrangements floraux uniques pour égayer vos moments spéciaux.
+          </p>
+        </div>
+        <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+          {people.map((person) => (
+            <li key={person.name}>
+              <div className="flex items-center gap-x-6">
+                <img className="h-16 w-16 rounded-full" src={person.imageUrl} alt="" />
+                <div>
+                  <h3 className="text-base font-semibold leading-7 tracking-tight text-gray-900">{person.name}</h3>
+                  <p className="text-sm font-semibold leading-6 text-flowergreen">{person.role}</p>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
-  );
-};
+    </div>
+  )
+}
 
 export default OurHistory;

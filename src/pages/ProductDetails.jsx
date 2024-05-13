@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchProducts } from "../utils/productservice";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Hero from "../components/Hero";
 import ProductGallery from "../components/ProductGallery";
 import Divider from "../components/Divider";
 import FloatCart from "../components/FloatCart"; 
@@ -109,7 +108,6 @@ const ProductDetails = ({ openCart }) => {
 
   return (
     <div className="bg-white">
-      <Hero />
       <div className="mx-auto justify-center max-w-2xl grid grid-cols-1 gap-x-8 gap-y-16 px-4 sm:px-6 lg:max-w-7xl lg:grid-cols-2 lg:px-8 my-4">
         <ProductGallery photos={product && product.images} />
         <div className="space-y-2">

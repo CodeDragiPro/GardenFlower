@@ -4,6 +4,7 @@ import ProductCard from '../components/ProductCard';
 import CategoryFilter from '../components/CategoryFilter';
 import Section from '../components/Section';
 import Hero from '../components/Hero';
+import Divider from '../components/Divider';
 
 const ProductPage = () => {
   const [products, setProducts] = useState([]);
@@ -46,10 +47,13 @@ const ProductPage = () => {
 
   return (
     <div className='h-full  my-2'>
-      <Hero/>
-    <div className="container mx-auto">
-      <Section text="NOS PRODUITS" />
+      
+    <div className="container mx-auto py-2">
+      <Section text="Nos produits" />
+      <div className='py-4'>
       <CategoryFilter categories={[...categories]} selectedCategory={selectedCategory} onSelectCategory={filterProductsByCategory} />
+      </div>
+      <Divider/>
       <div className="flex flex-wrap items-center justify-center">
         {displayedProducts.map(product => (
           <ProductCard key={product.id} product={product} />

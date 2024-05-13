@@ -143,7 +143,7 @@ const FloatCart = ({ closeCart }) => {
                         <p>Total</p>
                         <p>{cartItems.reduce((acc, cur) => acc + cur.price * cur.quantity, 0)} €</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
+                      <p className="mt-0.5 text-sm text-gray-500">Les taxes seront appliqué lors du paiement.</p>
                       <div className="mt-6">
                         <a
                           href="#"
